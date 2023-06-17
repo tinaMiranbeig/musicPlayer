@@ -1,0 +1,268 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    direction: rtl;
+    font-family: sans-serif;
+}
+.C-container
+{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+.background
+{
+    background: #80808080;
+  /* Add the blur effect */
+  filter: blur(30px);
+  -webkit-filter: blur(30px);
+  
+  /* Full height */
+  height: 100%; 
+  
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.background>.circle
+{
+    border-radius: 50%;
+    position: absolute;
+}
+.background>.circle1
+{
+    background-color: aqua;
+    width: 140px;
+    height: 140px;
+    bottom: 3px;
+    right: -2px;
+}
+.background>.circle2
+{
+    background-color: orange;
+    width: 295px;
+    height: 295px;
+    bottom: 0px;
+    left: 0px;
+}
+.container
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+}
+.top-menu
+{
+    display: flex;
+    justify-content: space-between;
+    height: 10vh;
+}
+.right-menu , .left-menu
+{
+    display: inline-flex;
+}
+.right-menu
+{
+
+}
+.left-menu
+{
+
+}
+.menu
+{
+    color:black;
+    font-size: 21px;
+    padding: 18px 18px 10px;
+}
+.music-content
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 67vh;
+    text-align: center;
+}
+.music-content>.music-img
+{
+
+}
+.music-content>.music-text
+{
+    margin-top: 10px;
+    text-align: center;
+    max-width: 300px;
+}
+.music-content #music-name
+{
+    font-size: 25px;
+    font-weight: bold;
+}
+.music-content #music-singer
+{
+    color: gray;
+    font-size: 12px;
+    font-weight: bold;
+}
+.music-content>img
+{
+    height: 270px;
+    width: 270px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 13px gray;
+    transition: all 0.5s;
+}
+.control-music
+{
+    height: 23vh;
+    padding: 0 20px;
+}
+.top-control,.progress-bar,.bottom-control
+{
+    display: flex;
+    justify-content: space-between;
+}
+.top-control,.progress-bar
+{
+    margin-bottom: 10px;
+}
+.top-control .small-controll
+{
+    font-size: 20px;
+}
+.control-music>.bottom-control .control
+{
+    font-size: 30px;
+    display: inline-block;
+    
+}
+.bottom-control>.center-control .control
+{
+    margin: 0 13px;
+}
+.C-progress
+{
+    width: 100%;
+    position: relative;
+    margin-bottom: 29px;
+}
+.progress-line
+{
+    width: 100%;
+    height: 3px;
+    background-color: black;
+    border-radius: 4px;
+}
+.progress-circle
+{
+    height: 15px;
+    width: 15px;
+    background-color: #727272;
+    border-radius: 50%;
+    position: absolute;
+    top: -6px;
+    left: 0;
+}
+.progress-left
+{
+    width: 0%;
+    height: 3px;
+    background-color: rgba(252, 252, 252, 0.452);
+    border-radius: 4px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+}
+#volume
+{
+    position: relative;
+}
+#volume-progress
+{
+    width: 46px;
+    height: 158px;
+    left: 6px;
+    top: 48px;
+    background-color: white;
+    position: absolute;
+    border-radius: 5px;
+    display: none;
+    text-align: center;
+    padding: 5px;
+}
+#volume-progress>input[type=range]
+{
+    -webkit-appearance: slider-vertical;
+    width: 16px;
+    height: 143px;
+    padding: 0 5px;
+}
+#volume-left
+{
+    width: 100%;
+    height: 50%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 255, 0.726);
+    position: absolute;
+    border-radius: 5px;
+    background-color: rgb(202, 108, 202);
+}
+.dialog-info
+{
+    background-color: white;
+    position: absolute;
+    display: none;
+    left: 50%;
+    top: 50%;
+    width: 304px;
+    height: 160px;
+    border-radius: 12px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 100vh black;
+    padding: 5px;
+}
+.dialog-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.dialog-info .close-btn
+{
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 25px;
+}
+.dialog-info .right-side
+{
+    width: 100%;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1.8;
+}
+.dialog-info .left-side
+{
+    width: 100%;
+}
+.dialog-info .left-side img
+{
+    width: 90%;
+}
+/* @media (min-width: 992px)
+{
+    .music-content>img
+    {
+        height: 345px;
+        width: 345px;
+    }
+} */

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
+        data-stencil-namespace="ionicons"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js"
+        data-stencil-namespace="ionicons"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"
+        data-stencil-namespace="ionicons"></script>
+    <script src="https://cdn.themesinfo.com/detector.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js" data-stencil-namespace="ionicons"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <title>MusicPlayer</title>
+</head>
+<body>
+    <div class="C-container">
+        <div class="background">
+            <div class="circle circle1"></div>
+            <div class="circle circle2"></div>
+        </div>
+        <div class="container">
+            <div class="top-menu">
+                <div class="right-menu">
+                    <div class="menu" id="ellipsis">
+                        <ion-icon name="ellipsis-vertical"></ion-icon>
+                    </div>
+                    <div class="dialog-info">
+                        <div class="dialog-content">
+                            <div class="close-btn">x</div>
+                            <div class="right-side">
+                                <div class="text">
+                                  برنامه نویس :میران
+                                    <br>
+                                    V : 2.3
+                                </div>
+                            </div>
+                            <div class="left-side">
+                                <img src="images/logo.png" alt="">
+                            </div>
+                        </div>     
+                    </div>
+                    <div class="menu" id="optionMenu">
+                        <ion-icon name="options"></ion-icon>
+                    </div>
+                </div>
+                <div class="left-menu">
+                    
+                    <div class="menu" id="volume">
+                        <ion-icon name="volume-high"></ion-icon>
+                    </div>
+                    <div id="volume-progress">
+                        <input type="range" min="0" max="10" id="volume-progress-input">
+                    </div>
+                </div>            
+            </div>
+            <div class="music-content">
+                <img src="images/img.png" alt="" id="music-img">
+                <div class="music-text">
+                    <div id="music-name">Rosari Abi</div>
+                    <div id="music-singer">Ali Zand Vakili</div>
+                    </div>
+            </div>
+            <div class="control-music">
+                <div class="top-control">
+                    <div class="small-controll">
+                        <ion-icon name="add-outline"></ion-icon>
+                    </div>
+                    <div class="small-controll">
+                        <ion-icon name="heart-outline"></ion-icon>
+                    </div>
+                    <div class="small-controll">
+                        <ion-icon name="pulse-outline"></ion-icon>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="C-progress">
+                        <div class="progress-line"></div>
+                        <div class="progress-left" id="progress-bar"></div>
+                        <div class="progress-circle" id="progress-circle"></div>
+                    </div>
+                </div>
+                <div class="bottom-control" id="bottom-control">
+                    <div class="control" id="repeat-btn">
+                        <ion-icon name="repeat"></ion-icon>
+                    </div>
+                    <div class="center-control">
+                        <div class="control" id="next-btn">
+                            <ion-icon name="play-forward"></ion-icon>
+                        </div>
+    
+                        <div class="control" id="play-pause-btn">
+                            <ion-icon name="play"></ion-icon>
+                        </div>
+    
+                        <div class="control" id="priv-btn">
+                            <ion-icon name="play-back"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="control" id="shuffle-btn">
+                        <ion-icon name="shuffle"></ion-icon>
+                    </div>
+
+                    <audio src="music/Arsha.mp3" id="audio"></audio>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+    <script>
+        var play_pause_btn = document.getElementById('play-pause-btn');
+        var next_btn = document.getElementById('next-btn');
+        var priv_btn = document.getElementById('priv-btn');
+        var volume_btn = document.getElementById('volume');
+        var audio = document.getElementById('audio');
+        var progressBarContainer = document.getElementsByClassName('C-progress')[0];
+        var progressBar = document.getElementById('progress-bar');
+        var progressCircle = document.getElementById('progress-circle');
+        var musicTitle = document.getElementById('music-name');
+        var musicSinger = document.getElementById('music-singer');
+        var musicImg = document.getElementById('music-img');
+        var background = document.querySelector('.background');
+        var circle1 = background.querySelector('.circle1')
+        var circle2 = background.querySelector('.circle2')
+        var control = document.getElementById('bottom-control');
+        var ellipsis = document.getElementById('ellipsis');
+        var dialogInfo = ellipsis.nextElementSibling;
+        var dialogCloseBtn = dialogInfo.querySelector('.close-btn');
+
+
+        var volumeProgress = document.getElementById('volume-progress');
+        var volumeInput = document.getElementById('volume-progress-input');
+
+        const CircleColors=['aqua,orange','aquamarine,#93fb2c','aqua,orange',
+        'blueviolet,#e0644d','lightcoral,aquamarine','blueviolet,cornflowerblue',
+        '#30bd8e,#ff7a4d','turquoise,springgreen','#da43da,steelblue','#28eded,#257777','#086969,aquamarine'];
+
+        function UpdateProgress(e) {
+            const {duration , currentTime} = e.srcElement
+            const progressPercent = (currentTime / duration) * 100;
+            progressBar.style.width = ""+progressPercent+"%";
+            progressCircle.style.left = ""+progressPercent+"%";
+        }
+        function setCircleColor() {
+            var index = Math.floor(Math.random() * 10);
+            var colors = CircleColors[index];
+            colors = colors.split(',');
+            circle2.style.backgroundColor = colors[1];
+            circle1.style.backgroundColor = colors[0];
+        }
+        var i1 = 140;
+        var circle1Status = "zomout";
+        var i2 = 300;
+        var circle2Status = "zomin";
+        function CircleAnimate() {
+            switch (circle2Status) {
+                case "zomin":
+                    if (i2<=180) {
+                        circle2Status = 'zomout'
+                    }
+                    i2--;
+                    circle2.style.width = i2+"px";
+                    circle2.style.height = i2+"px";
+                    break;
+                case "zomout":
+                    if (i2>=300) {
+                        circle2Status = 'zomin'
+                    }
+                    i2++;
+                    circle2.style.width = i2+"px";
+                    circle2.style.height = i2+"px";
+                    break;
+            }
+            switch (circle1Status) {
+                case "zomin":
+                    if (i1<=180) {
+                        circle1Status = 'zomout'
+                    }
+                    i1--;
+                    circle1.style.width = i1+"px";
+                    circle1.style.height = i1+"px";
+                    break;
+                case "zomout":
+                    if (i1>=300) {
+                        circle1Status = 'zomin'
+                    }
+                    i1++;
+                    circle1.style.width = i1+"px";
+                    circle1.style.height = i1+"px";
+                    break;
+            }
+        }
+
+        function PlayMusic() {
+            audio.play();
+            control.classList.add('isplay');
+            play_pause_btn.innerHTML = "<ion-icon name=\"pause\"></ion-icon>";
+            musicImg.style.width= "270px";
+            musicImg.style.height= "270px";
+        }
+        function PauseMusic() {
+            audio.pause();
+            control.classList.remove('isplay');
+            play_pause_btn.innerHTML = "<ion-icon name=\"play\"></ion-icon>";
+            musicImg.style.width= "200px";
+            musicImg.style.height= "200px";
+        }
+
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clinetX = e.offsetX;
+            const duration = audio.duration;
+
+            audio.currentTime = (clinetX / width) * duration;
+        }
+
+        function PlayPauseMusic() {
+            var musicStatus = control.classList.contains('isplay');
+            if (musicStatus) {
+                PauseMusic();
+            }
+            else {
+                PlayMusic();
+            }
+        }
+        function showVolume() {
+            if (volumeProgress.style.display == "block") {
+                volumeProgress.style.display = "none";
+                return;
+            }
+            volumeProgress.style.display= "block"
+        }
+        function closeDialogInfo(e) {
+            dialogInfo.style.display = "none";
+        }
+        function showDialogInfo(e) {
+            var Element = dialogInfo;
+            if (Element.style.display == "" || Element.style.display == "none") {
+                Element.style.display = "block";
+            }
+            else{
+                Element.style.display = "none";
+            }
+        }
+        function setVolume(e) {
+            audio.volume = ((Number(volumeInput.value))/10);
+            if (audio.volume == 0) {
+                volume_btn.innerHTML = '<ion-icon name="volume-mute"></ion-icon>';
+            }
+            else{
+                volume_btn.innerHTML = '<ion-icon name="volume-high"></ion-icon>';
+            }
+        }
+        function loadSong(song,singer) {
+            musicTitle.innerHTML = song;
+            musicSinger.innerHTML = singer;
+            musicImg.src = 'images/' + song + singer +'.png';
+            audio.src = 'music/' + song + singer  +'.mp3';
+            audio.volume = 0.5;
+            progressBar.style.width =  "0%";
+            progressCircle.style.left = "0%";
+            play_pause_btn.innerHTML = "<ion-icon name=\"play\"></ion-icon>";
+            setCircleColor();
+        }
+
+        var music_play=false;
+
+        const songs = ['Tabestoon','ShaskeGol','Tabestoon','Wildfire','Hook'];
+        const singer = ['Arsha', 'Hameddehghani','Shakib','Syml','Syml'];
+        var songIndex = 0;
+        loadSong(songs[songIndex],singer[songIndex]);
+
+        function nextMusic() {
+            songIndex +=1 ;
+            if (songIndex>=songs.length) {
+                songIndex = 0;
+            }
+            loadSong(songs[songIndex],singer[songIndex]);
+            PlayMusic();
+        }
+        function privMusic() {
+            songIndex -= 1;
+            if (songIndex < 0) {
+                songIndex = songs.length-1;
+            }
+            loadSong(songs[songIndex],singer[songIndex]);
+            PlayMusic();
+        }
+        play_pause_btn.addEventListener('click',PlayPauseMusic);
+        next_btn.addEventListener('click',nextMusic);
+        priv_btn.addEventListener('click',privMusic);
+        audio.addEventListener('timeupdate',UpdateProgress);
+        audio.addEventListener('ended',nextMusic);
+        progressBarContainer.addEventListener('click',setProgress);
+        volumeProgress.addEventListener('click', setVolume);
+        volume_btn.addEventListener('click',showVolume);
+        volumeInput.addEventListener('change',setVolume);
+        ellipsis.addEventListener('click',showDialogInfo);
+        dialogCloseBtn.addEventListener('click',closeDialogInfo)
+
+        window.setInterval(() => {
+            CircleAnimate();
+        }, 30);
+    </script>
+</body>
+</html>
